@@ -1,4 +1,4 @@
-# Rubiks-Cube-Algorithm
+# Rubiks-Cube-Graph-Algorithm
 
 Below contains the primary class methods and the rough concepts behind them (POORLY DESCRIBED ON PURPOSE):
 
