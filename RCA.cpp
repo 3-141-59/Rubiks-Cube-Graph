@@ -134,8 +134,11 @@ int main() {
         } else if (RCA.cmdinput=="remove_graphoverlap" || RCA.cmdinput=="rgo") {
             std::cin>>RCA.TempOverlapName;
             RCA.remove_graphOverlap(RCA.TempOverlapName);    
+        } else if (RCA.cmdinput=="print" || RCA.cmdinput=="p") {
+            RCA.print();
         } else if (RCA.cmdinput=="exit") {
             break;
+
         }
     }
     return 0;
