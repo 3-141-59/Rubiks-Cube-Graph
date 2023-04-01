@@ -3,11 +3,18 @@
 //Graph class
 class Graph {
     public:
+        std::string cmdinput;
+        std::string TempOverlapName;
         int rows = 0;
         int columns = 0;
         std::string **graph;
         std::string **graphOverlap;
         std::map<std::string, int> graphOverlapData;
+        std::map<std::string, bool> modes = 
+                            {{"plot", true},
+                             {"locate", false}};
+        std::string mode;
+        
         
         Graph(int rows, int columns) : rows(rows), columns(columns) {
             graph = new std::string*[rows];
@@ -50,17 +57,38 @@ class Graph {
             }
             graphOverlapData[ol_name] = 1;
         }
-        print_OverlapData() {
+        list_OverlapData() {
             std::map<std::string, int>::iterator itr;
             for(itr = graphOverlapData.begin(); itr != graphOverlapData.end(); ++itr) {
                 std::cout<<itr->first<<' '<<itr->second<<std::endl;
             }
+        }
+        remove_graphOverlap(std::string& OverlaptoRemove) {
+            graphOverlapData.erase(OverlaptoRemove);
         }
         delete_graphOverlaps() {
             for(int n=0;n<rows;n++) {
                 delete[] graphOverlap[n];
             }
             delete[] graphOverlap;
+        }
+        record_graph() {
+            std::cout<<"> [SET_MODE]"<<std::endl;
+            std::cout<<"> ";
+            std::cin>>mode;
+        }
+        list_modes() {
+            std::map<std::string, bool>::iterator itr;
+            for(itr = modes.begin();itr!=modes.end();++itr) {
+                if(itr->second==false) {
+                    std::cout<<itr->first<<" NOT ACTIVE"<<std::endl;
+                } else if (itr->second==true) {
+                    std::cout<<itr->first<<" ACTIVE"<<std::endl;
+                }
+            }    
+        } 
+        set_mode() { //Technically this isn't constant (we aren't just going to set the mode once)
+            
         }
 
         ~Graph() {
@@ -71,28 +99,44 @@ class Graph {
         } 
 };
 int main() {
-    //Objects
+    //First, we declare the object with parameters that contain the size of the graph
     Graph RCA(50, 100);
     
-    //Graph methods
-    RCA.initialize();
-    RCA.print();
+    //Then, we find out what mode we want to go into (can be changed)
+    RCA.record_graph(); //Ask once during recording of the data
 
-    //What mode to go into (plot, locate mode etc)
-    std::string command; //input variable
-    while (true) {
-        std::cin>>command;
-        if(command=="test") {
-            std::cout<<"You ran the test command"<<std::endl;
-        } else if(command=="OverlapData") {
-            RCA.create_overlap("MyOverlap1");
-            RCA.create_overlap("MyOverlap2");
-            std::system("clear");
-            RCA.print();
-            RCA.print_OverlapData();
-            RCA.delete_graphOverlaps();
+    //Now we have most of the variables we need initialized, we can start to run an infinite loop
+    //for commands, we may have nested while(true) as we have  various modes and certain commands
+    //that will not be avalible in certain modes.
+    //
+    //mode locked commands:
+    //  - plot
+    //  - locate
+    //
+    //generic commands:
+    //  - list_modes
+    //  - print (graph)
+    //  - create_overlap
+    //
+    //we are going to put the generic commands in the first while loop and
+    //put all the mode locked ones in a nested while loop
+ 
+    while(true) {
+        std::cout<<"> ";
+        std::cin>>RCA.cmdinput;
+        if(RCA.cmdinput=="list_modes" || RCA.cmdinput=="lm") {
+            RCA.list_modes();
+        } else if (RCA.cmdinput=="create_overlap" || RCA.cmdinput=="co" ) {
+            std::cin>>RCA.TempOverlapName;
+            RCA.create_overlap(RCA.TempOverlapName);
+        } else if (RCA.cmdinput=="list_overlapdata" || RCA.cmdinput=="lod") {
+            RCA.list_OverlapData();
+        } else if (RCA.cmdinput=="remove_graphoverlap" || RCA.cmdinput=="rgo") {
+            std::cin>>RCA.TempOverlapName;
+            RCA.remove_graphOverlap(RCA.TempOverlapName);    
+        } else if (RCA.cmdinput=="exit") {
+            break;
         }
     }
-
     return 0;
 }
