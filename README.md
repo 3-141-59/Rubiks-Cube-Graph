@@ -9,6 +9,8 @@ src/
 
 $ ./launch.ps1
 ```
+![CLIDataBridge](https://user-images.githubusercontent.com/129062223/229358121-70e26ae1-381b-4862-a0f3-cf36593f5503.png)
+
 Below contains the primary class methods and the rough concepts behind them (POORLY DESCRIBED ON PURPOSE):
 
 ![Screenshot 2023-03-28 145424](https://user-images.githubusercontent.com/129062223/228260886-eff21a2a-0f1b-48e1-a35f-4252da6acc4c.png)
