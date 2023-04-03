@@ -4,8 +4,8 @@
 src/
 └─ RCA.cpp #src file automatically compiled by launch.ps1
    cmdwindow/
-   ├─ cmdwindow.cpp #Also automatically compiled
-   └─ launch.ps1 #launch.ps1 opens two windows, the Command Window and the main file (RCA.cpp)
+      ├─ cmdwindow.cpp #Also automatically compiled
+      └─ launch.ps1 #launch.ps1 opens two windows, the Command Window and the main file (RCA.cpp)
 
 $ ./launch.ps1
 ```
