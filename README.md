@@ -9,6 +9,16 @@ src/
 
 $ ./launch.ps1
 ```
+Below contains the flow diagram/information around the workings of the CLIDataBridge:
+```
+---------------------------------------
+datatype  ┃  receive-speed    ┃  time
+---------------------------------------
+int=      ┃   fast    ------> ┃  //TODO
+string=   ┃   fast    ------> ┃  //TODO
+bool=     ┃   quite fast ---> ┃  //TODO
+
+```
 ![CLIDataBridge](https://user-images.githubusercontent.com/129062223/229358121-70e26ae1-381b-4862-a0f3-cf36593f5503.png)
 
 Below contains the primary class methods and the rough concepts behind them (POORLY DESCRIBED ON PURPOSE):
