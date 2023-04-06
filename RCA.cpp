@@ -1,6 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
+#include <cmath>
+#include <string>
 
-//Graph class
+//Main Graph class
 class Graph {
     public:
         std::string cmdinput;
@@ -27,18 +30,25 @@ class Graph {
             std::system("clear");
             std::cout<<"Initialization was succesfull"<<std::endl;
         }
-        print() {
+        void print() {
             for(int s=0;s<rows;s++) {
                 for(int k=0;k<columns;k++) {
                     std::cout<<graph[s][k];
-                } 
+                }
+                
                 std::cout<<std::endl;
-            }
+            }    
+                
+                
+                
+            //Print out second graph containing information here
+                
+                
         }
-        plot(int x, int y) {
+        void plot(int x, int y) {
             graph[x][y] = "X";
         }
-        initialize() {
+        void initialize() {
             for(int f=0;f<columns;f++) {
                 graph[rows/2][f] = "─";
             }
@@ -47,7 +57,7 @@ class Graph {
             } 
             graph[rows/2][columns/2] = "┼";
         }
-        create_overlap(std::string ol_name) { 
+        void create_overlap(std::string ol_name) { 
             graphOverlap = new std::string*[rows];            
             for(int a=0;a<rows;a++) {
                 graphOverlap[a] = new std::string[columns];
@@ -55,29 +65,36 @@ class Graph {
                     graphOverlap[a][e] = " ";
                 }
             }
-            graphOverlapData[ol_name] = 1;
+            graphOverlapData[ol_name] = 0;
         }
-        list_OverlapData() {
+        void list_OverlapData() {
             std::map<std::string, int>::iterator itr;
             for(itr = graphOverlapData.begin(); itr != graphOverlapData.end(); ++itr) {
                 std::cout<<itr->first<<' '<<itr->second<<std::endl;
             }
         }
-        remove_graphOverlap(std::string& OverlaptoRemove) {
+        void remove_graphOverlap(std::string& OverlaptoRemove) {
             graphOverlapData.erase(OverlaptoRemove);
         }
-        delete_graphOverlaps() {
+        void delete_graphOverlaps() {
             for(int n=0;n<rows;n++) {
                 delete[] graphOverlap[n];
             }
             delete[] graphOverlap;
         }
-        record_graph() {
+        void record_graph() {
             std::cout<<"> [SET_MODE]"<<std::endl;
             std::cout<<"> ";
             std::cin>>mode;
         }
-        list_modes() {
+        void linear_equation_example() {
+            for(int ve=rows-1;ve>=0;ve--) {
+                int ox=rows-1-ve;
+                graph[ve][ox+26] = '/';
+            }
+            print();
+        }
+        void list_modes() {
             std::map<std::string, bool>::iterator itr;
             for(itr = modes.begin();itr!=modes.end();++itr) {
                 if(itr->second==false) {
@@ -87,7 +104,7 @@ class Graph {
                 }
             }    
         } 
-        set_mode() { //Technically this isn't constant (we aren't just going to set the mode once)
+        void set_mode() { //Technically this isn't constant (we aren't just going to set the mode once)
             
         }
 
@@ -98,10 +115,45 @@ class Graph {
             delete[] graph;
         } 
 };
+
+class graphDashboard : public Graph {
+        int graphDashRows=0;
+        int graphDashColumns=0;
+        std::string **graphDash;
+        graphDashboard(int graphDashRows, int graphDashColumns) : Graph(rows, columns) {}
+        DashInitialize(int graphDashRows, int graphDashColumns) {
+            graphDash = new std::string*[graphDashRows];
+            for(int as=0;as<graphDashRows;as++) {
+                graphDash[as]=new std::string[graphDashColumns];
+                for(int sd=0;sd<graphDashColumns;sd++) {
+                    graphDash[as][sd] = '?';
+                }
+            }
+        }
+        void Dashprint() {
+            for(int fg=0;fg<graphDashRows;fg++) {
+                for(int ju=0;ju<graphDashColumns;ju++) {
+                    std::cout<<graphDash[fg][ju];
+                }
+                std::cout<<std::endl;
+            }
+        }
+        //Use the function below for most cases of printing the graph
+        void printGraphDashBoard() {
+            for(int za=0;za<rows;za++) {
+                print();
+                std::cout<<"    ";
+                Dashprint();
+                std::cout<<std::endl;
+            }
+        }
+};
+
+
 int main() {
     //First, we declare the object with parameters that contain the size of the graph
     Graph RCA(50, 100);
-    
+    RCA.initialize(); 
     //Then, we find out what mode we want to go into (can be changed)
     RCA.record_graph(); //Ask once during recording of the data
 
@@ -138,7 +190,13 @@ int main() {
             RCA.print();
         } else if (RCA.cmdinput=="exit") {
             break;
-
+        } else if (RCA.cmdinput=="linear_example" || RCA.cmdinput=="le") {
+            std::system("clear");
+            RCA.linear_equation_example();
+            std::cout<<"y=x"<<std::endl;
+        } else if (RCA.cmdinput=="clearconsole" || RCA.cmdinput=="cc") {
+            std::system("clear");
+            RCA.print();
         }
     }
     return 0;
